@@ -34,15 +34,24 @@ router.get('/edit/:id', (req, res) => {
 })
 
 router.post('/add', (req, res) => {
-  //save to batabase
-  const topic = new Topic({
-    user_say: req.body.ask,
-    answer: req.body['answer[]']
+  Topic.findOne({ _id: req.body.id }).exec((err, data) => {
+    if (!data) {
+      //save to batabase
+      const topic = new Topic({
+        user_say: req.body.ask,
+        answer: req.body['answer[]']
+      })
+      topic.save((err) => {
+        if (err) res.send('errors')
+      })
+      res.send('ok')
+    } else {
+      Topic.findByIdAndUpdate(data.id, { $set: { user_say: req.body.ask, answer: req.body['answer[]'] } }).exec((err) => {
+        if (err) return handleError(err);
+        res.send('ok')
+      })
+    }
   })
-  topic.save((err) => {
-    if (err) res.send('errors')
-  })
-  res.send('ok')
 })
 
 module.exports = router;

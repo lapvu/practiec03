@@ -13,8 +13,19 @@ function addNewAnswerTextbox() {
 
 //edit
 function editContent(id) {
+	var html = "";
 	$.get('/edit/' + id, (res) => {
-		alert('topic : ' + res.topic + ' , user_say : ' + res.user_say + ', answer : ' + res.answer + 'update time : ' + res.updatetime)
+		html += '<div class="input-group">' +
+			'<span class="input-group-addon">' +
+			'<input id="is_active[]" name="is_active[]" type="checkbox" disabled="true"></span>' +
+			'<input id="is_answer[0]" name="is_an	swer[]" type="text" value="' + res.answer[0] + '" class="form-control"></div>'
+		for (i = 1; i < res.answer.length; i++) {
+			count++;
+			html += '<br><div class="input-group abc"><span class="input-group-addon"><input id="is_active[]" type="checkbox" checked></span><input id="is_answer" name="is_answer[]" value="' + res.answer[i] + '" type="text" class="form-control"></div>'
+		}
+		$("#form_answers").html(html);
+		$('#tags_1').importTags(res.user_say);
+		$('#id').val(res._id);
 	})
 }
 
@@ -50,6 +61,7 @@ function confirmDeleteContent(id) {
 		}
 	})
 }
+
 // switch
 var clickCheckbox = document.querySelector('.js-switch');
 $('.js-switch').click(() => {
@@ -73,10 +85,9 @@ $('.js-switch').click(() => {
 // reset value
 function reset() {
 	$('.abc').remove();
-	$("#tags_1").val("abc");
-	$(".tag").remove();
+	$("#tags_1").val("");
 	$('br').remove();
-	$('input').val("");
+	$('#tags_1').removeTag();
 }
 
 
@@ -92,7 +103,8 @@ function Save() {
 	} else {
 		$.post('/add', {
 			ask: $("#tags_1").val(),
-			answer: data
+			answer: data,
+			id: $('#id').val()
 		}, (res) => {
 			if (res === 'ok') {
 				swal({
