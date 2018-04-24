@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Admin AI-Bot</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="plugins/iCheck/all.css">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="plugins/colorpicker/bootstrap-colorpicker.min.css">
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="plugins/select2/select2.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/AdminLTE.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="dist/css/user.css">
+  <link rel="stylesheet" href="plugins/xoxco-tags-input/jquery.tagsinput.min.css">
+  <link rel="stylesheet" href="plugins/json-menu/prettify.css">
+  <link rel="stylesheet" href="plugins/alert/sweetalert2.css">
+
+  <!-- jQuery 2.2.3 -->
+  <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+
+  <link rel="stylesheet" href="plugins/switchery/switchery.css">
+  <script src="plugins/switchery/switchery.js"></script>
+  <script src="plugins/json-menu/json-menu.js"></script>
+  <script src="plugins/alert/sweetalert2.js"></script>
+
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
+
+    <header class="main-header">
+      <!-- Logo -->
+      <a href="../../index2.html" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini">
+          <b>A</b>LT</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg">
+          <b>Admin </b>AI-Bot</span>
+      </a>
+      <!-- Header Navbar: style can be found in header.less -->
+      <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+      </nav>
+    </header>
+    <aside class="main-sidebar">
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar left-menu">
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+
+        </ul>
+      </section>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <div class="panel panel-flat">
+
+        <div class="panel-body">
+          <div class="row">
+
+            <button type="button" class="btn btn-success addRule" onclick="reset()">
+              <i class="icon-add position-left"></i> Reset</button>
+            <button type="button" class="btn btn-primary pull-right saveRule" onclick="Save()">
+              <i class="icon-floppy-disk position-left"></i>Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-flat" indexpanel="3">
+        <div class="panel-body">
+          <i class="icon-bin rmCt" style="display: inline;"></i>
+          <div class="wrMove">
+            <i class="icon-arrow-up13 moveTop" style="display: inline;"></i>
+            <i class="icon-arrow-down132 moveBot" style="display: inline;"></i>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <label>User says similar to: </label>
+              <div class="input-group">
+                <input id="tags_1" type="text" class="tags" value="" />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <label>Bot replies with</label>
+              <label>
+                <input type="checkbox" class="js-switch" checked /> Random
+              </label>
+              <form role="form" id="form_answers">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input id="is_active[]" name="is_active[]" type="checkbox" disabled="true">
+                  </span>
+                  <input id="is_answer[]" name="is_answer[]" type="text" class="form-control">
+                </div>
+              </form>
+              <div class="Addanswer">
+                <button type="button" class="btn btn-success addAnswer" id="btn_answer_1" onclick="addNewAnswerTextbox()">
+                  <i class="icon-plus22"></i> Add Answer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-flat" indexpanel="4">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-header">
+                <h3 class="box-title">Content Table</h3>
+                <div class="box-tools">
+                  <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Reminder
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                      <li role="presentation">
+                        <a role="menuitem" tabindex="-1" href="#">Wikimadia</a>
+                      </li>
+                      <li role="presentation">
+                        <a role="menuitem" tabindex="-1" href="#">Weather</a>
+                      </li>
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                  <tr>
+                    <th> </th>
+                    <th>Topic</th>
+                    <th>Reason</th>
+                    <th> </th>
+                    <th> </th>
+                  </tr>
+                  <% data.forEach((e,i)=>{%>
+                    <tr>
+                      <td>
+                        <%=i %>
+                      </td>
+                      <td>
+                        <%=e.topic%>
+                      </td>
+                      <td>
+                        <%= e.user_say%>
+                      </td>
+                      <td>
+                        <a href="javascript:void(0)" onclick="editContent('<%=e.id%>')">
+                          <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                      </td>
+                      <td>
+                        <a href="javascript:void(0)" title="Nhấn vào đây để xóa" style="color: #dd4b39;" onclick="confirmDeleteContent('<%=e.id%>')">
+                          <i class="fa fa-times-circle" aria-hidden="true"></i> Xóa</a>
+                      </td>
+                    </tr>
+                    <%})%>
+                </table>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+        </div>
+        <!-- /.row -->
+
+      </div>
+    </div>
+    <script type="text/javascript">
+      var elem = document.querySelector('.js-switch');
+      var init = new Switchery(elem);
+
+      defaults = {
+        color: '#64bd63'
+        , secondaryColor: '#dfdfdf'
+        , jackColor: '#fff'
+        , jackSecondaryColor: null
+        , className: 'switchery'
+        , disabled: false
+        , disabledOpacity: 0.5
+        , speed: '0.1s'
+        , size: 'default'
+      }
+
+
+
+      $(document).ready(function () {
+
+        $('#tags_1').tagsInput({ width: 'auto' });
+        $('#tags_2').tagsInput({
+          width: 'auto',
+          onChange: function (elem, elem_tags) {
+            var languages = ['php', 'ruby', 'javascript'];
+            $('.tag', elem_tags).each(function () {
+              if ($(this).text().search(new RegExp('\\b(' + languages.join('|') + ')\\b')) >= 0)
+                $(this).css('background-color', 'yellow');
+            });
+          }
+        });
+        $('#tags_3').tagsInput({
+          width: 'auto',
+
+          //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
+          autocomplete_url: 'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
+        });
+
+      });
+
+    </script>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <div class="pull-right hidden-xs">
+        <b>Version</b> 1.0.0
+      </div>
+      <strong>Copyright &copy; 2017
+        <a href="http://ai.com">AI</a>.</strong> All rights reserved.
+    </footer>
+  </div>
+  <!-- ./wrapper -->
+
+
+  <!-- Bootstrap 3.3.6 -->
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+  <!-- Select2 -->
+  <script src="plugins/select2/select2.full.min.js"></script>
+  <!-- date-range-picker -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+  <script src="plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- bootstrap datepicker -->
+  <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+  <!-- bootstrap time picker -->
+  <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
+  <!-- SlimScroll 1.3.0 -->
+  <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="dist/js/app.min.js"></script>
+  <script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
+
+  <script src="plugins/xoxco-tags-input/jquery.tagsinput.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="dist/js/pages/content.js"></script>
+</body>
+
+</html>
